@@ -11,10 +11,11 @@ def player(prev_play, opponent_history=[]):
 
     if len(opponent_history) > 1:
         recent_plays = "".join(opponent_history[-2:])
-        plays[recent_plays] += 1
+        if recent_plays in plays:
+            plays[recent_plays] += 1
         
     potential_plays = [prev_play + "R", prev_play + "P", prev_play + "S"]
-    predicted_next_play = max(potential_plays, key=lambda play: plays.get(play))[-1]
+    predicted_next_play = max(potential_plays, key=lambda play: plays.get(play, 0))[-1]
 
     counter_play = {"R": "P", "P": "S", "S": "R"}
     guess = counter_play[predicted_next_play]
